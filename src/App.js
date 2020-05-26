@@ -3,6 +3,8 @@ import { Router } from "@reach/router";
 import "./App.css";
 import SideBar from "./components/SideBar";
 import ArticleList from "./components/ArticleList";
+import Article from "./components/Article";
+
 
 class App extends Component {
   state = {
@@ -21,6 +23,7 @@ class App extends Component {
               <ArticleList path='/'/>
               <ArticleList path='/articles'/>
               <ArticleList path='/articles/topic/:topic_slug'/>
+              <Article path='/articles/article/:article_id'/>
             </Router>
           </div>
         </div>
