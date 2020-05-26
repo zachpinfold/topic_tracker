@@ -39,6 +39,7 @@ class SideBar extends Component {
               );
             })}
           </ul>
+          <Link to={'/articles/'}>all articles</Link>
         </div>
       </div>
     );

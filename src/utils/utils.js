@@ -6,14 +6,17 @@ export const fetchTopics = () => {
     })
 }
 
-export const fetchArticles = (topic_slug) => {
-    console.log(topic_slug)
+export const fetchArticles = (topic_slug, sort_by, order) => {
     return axios.get('https://pinny-news.herokuapp.com/api/articles', 
     {
         params: 
-        {topic: topic_slug}
+        {topic: topic_slug,
+        sort_by: sort_by,
+        order: order
+        }
     }
     ).then(({data: {articles}}) => {
         return articles
     })
 }
+

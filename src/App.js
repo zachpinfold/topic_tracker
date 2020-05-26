@@ -19,6 +19,7 @@ class App extends Component {
           <div id='hero--container--2'>
             <Router>
               <ArticleList path='/'/>
+              <ArticleList path='/articles'/>
               <ArticleList path='/articles/topic/:topic_slug'/>
             </Router>
           </div>
