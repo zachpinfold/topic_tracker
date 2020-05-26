@@ -5,3 +5,15 @@ export const fetchTopics = () => {
         return topics
     })
 }
+
+export const fetchArticles = (topic_slug) => {
+    console.log(topic_slug)
+    return axios.get('https://pinny-news.herokuapp.com/api/articles', 
+    {
+        params: 
+        {topic: topic_slug}
+    }
+    ).then(({data: {articles}}) => {
+        return articles
+    })
+}
