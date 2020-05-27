@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ArticleCard from "./ArticleCard";
 import * as api from "../utils/utils";
+import Pagination from "./Pagination";
 
 class ArticleList extends Component {
   state = {
@@ -8,6 +9,7 @@ class ArticleList extends Component {
     isLoading: true,
     order: "desc",
     sort_by: "created_at",
+    // page_number: 1
   };
 
   componentDidMount() {
@@ -23,12 +25,14 @@ class ArticleList extends Component {
     }
   }
 
-  getArticles = () => {
+  getArticles = (pageNumber) => {
+    console.log(pageNumber)
     api
       .fetchArticles(
         this.props.topic_slug,
         this.state.sort_by,
-        this.state.order
+        this.state.order,
+        pageNumber
       )
       .then((articles) => {
         this.setState({
@@ -70,6 +74,7 @@ class ArticleList extends Component {
             );
           })}
         </ul>
+        <Pagination getArticles={this.getArticles}/>
       </div>
     );
   }

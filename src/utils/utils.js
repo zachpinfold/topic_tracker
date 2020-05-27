@@ -8,10 +8,11 @@ export const fetchTopics = () => {
     });
 };
 
-export const fetchArticles = (topic_slug, sort_by, order) => {
+export const fetchArticles = (topic_slug, sort_by, order, pageNumber) => {
   return axios
     .get("https://pinny-news.herokuapp.com/api/articles", {
-      params: { topic: topic_slug, sort_by: sort_by, order: order },
+      params: { topic: topic_slug, sort_by: sort_by, order: order, p:pageNumber },
+
     })
     .then(({ data: { articles } }) => {
       return articles;
