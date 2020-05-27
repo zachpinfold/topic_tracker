@@ -12,6 +12,14 @@
   flex: 1 
 }
 
+.button--upvote  {
+  color: green;
+}
+
+.button--novote  {
+  color: black;
+}
+
 /* .App {
   text-align: center;
 }

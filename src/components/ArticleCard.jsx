@@ -11,7 +11,6 @@ const ArticleCard = ({article_id, title, created_at, author, topic, comment_coun
             <p>topic: {topic}</p>
             <p>comment count: {comment_count}</p>
             <ArticleVoteUpdator votes={votes} article_id={article_id}/>
-            {/* get rid of buttons  */}
         </div>
     );
 };

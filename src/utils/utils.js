@@ -40,3 +40,5 @@ export const updateVoteById = (article_id, increment) => {
     { inc_votes: increment }
   );
 };
+
+

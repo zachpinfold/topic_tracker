@@ -4,37 +4,33 @@ import axios from 'axios';
 class CommentAdder extends Component {
 
     state = {
-        comment: {
-            
-        username: 'weegembump',
-        body: 'This is a comment',
-        article_id: 1,
-        }
+        comment: ''
     }
 
-    // handleInputChange = (event) => {
-    //     const {name, value} = event.target
-    //     console.log(name, value)
-    //     this.setState({
-    //         [name]: value,
-    //     })
-    // }
+    handleInputChange = (event) => {
+        const {value} = event.target
+        this.setState({ comment: value })
+    }
 
     handleCommentSubmit = (event) => {
-        const {article_id} = this.props
+        console.log(this.props)
         event.preventDefault();
-        const {comment} = this.state
-        console.log(comment)
-        axios.post(`https://pinny-news.herokuapp.com/api/articles/1/comments`, comment).then((response) => {
-            console.log(response.data)
+        const {article_id, username} = this.props
+        const comment = {
+            username: username,
+            body: this.state.comment
+        }
+        axios.post(`https://pinny-news.herokuapp.com/api/articles/${article_id}/comments`, comment).then(({data}) => {
+            this.props.addComments(data)
         })
+        this.setState({body: ''})
     }
 
     render() {
         return (
             <div>
                 <form onSubmit={this.handleCommentSubmit}>
-                    <input type="text" placeholder="Add a comment..." name='body'/>
+                    <input type="text" onChange={this.handleInputChange} placeholder="Add a comment..." value={this.state.comment}/>
                     <button>add comment</button>
                 </form>
             </div>

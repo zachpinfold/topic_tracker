@@ -6,8 +6,19 @@ import CommentAdder from "./CommentAdder";
 class Article extends Component {
   state = {
     article: {},
-    ArticleComments: []
+    articleComments: []
   }
+
+addComments = ({comment}) => {
+  console.log(comment)
+  this.setState((currentState) => {
+    return {
+      articleComments: [comment, ...currentState.articleComments]
+    }
+  })
+  // use currentState
+  // spead and comma to push the comment in
+}
 
 componentDidMount()    {
     this.getArticle()
@@ -20,17 +31,9 @@ getArticle = () => {
         this.setState({article})
     })
     api.fetchCommentsByArticleId(article_id).then((comments) => {
-        this.setState({ArticleComments: comments})
+        this.setState({articleComments: comments})
     })
 }
-
-// getComments = () => {
-//     const {article_id} = this.props
-//     api.fetchCommentsByArticleId(article_id).then((comments) => {
-//         console.log(comments)
-//         this.setState({ArticleComments: comments})
-//     })
-// }
 
   render() {
     const {
@@ -55,13 +58,13 @@ getArticle = () => {
           <button>Vote Up</button>
           <button>Vote Down</button>
         </div>
-        <CommentAdder article_id={article_id}/>
+        <CommentAdder username={this.props.username} article_id={article_id} addComments={this.addComments}/>
         <div>
             <ul>
-                {this.state.ArticleComments.map((comment)=> {
+                {this.state.articleComments.map((comment)=> {
                     return (
                     <li key={comment.comment_id}>
-                        <ArticleCommentCard {...comment}/>
+                        <ArticleCommentCard username={this.props.username} {...comment}/>
                     </li>
                     )
                 })}

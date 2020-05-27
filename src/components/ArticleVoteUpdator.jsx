@@ -9,14 +9,10 @@ class ArticleVoteUpdator extends Component {
   handleUpdate = (voteDirection) => {
     this.setState(({ userVote }) => {
       let vote = 0;
-      if (userVote === 0 && voteDirection === +1) vote = +1;
-      if (userVote === 0 && voteDirection === -1) vote = -1;
+      if (userVote === 0 && voteDirection === 1 || userVote === -1 && voteDirection === -1) vote = 1;
+      if (userVote === 0 && voteDirection === -1 || userVote === 1 && voteDirection === +1) vote = -1;
       if (userVote === 1 && voteDirection === -1) vote = -2;
-      if (userVote === -1 && voteDirection === +1) vote = +2;
-      if (userVote === 1 && voteDirection === +1) vote = -1;
-      if (userVote === -1 && voteDirection === -1) vote = +1;
-      console.log(userVote);
-      console.log(voteDirection);
+      if (userVote === -1 && voteDirection === 1) vote = 2;
       return {
         userVote: userVote + vote,
         // userVote: userVote === 0 ? userVote + vote : userVote - vote
@@ -24,12 +20,12 @@ class ArticleVoteUpdator extends Component {
     });
     const { article_id } = this.props;
     let APIVote = 0;
-    if (this.state.userVote === 0 && voteDirection === +1) APIVote = +1;
+    if (this.state.userVote === 0 && voteDirection === 1) APIVote = 1;
     if (this.state.userVote === 0 && voteDirection === -1) APIVote = -1;
     if (this.state.userVote === 1 && voteDirection === -1) APIVote = -2;
-    if (this.state.userVote === -1 && voteDirection === +1) APIVote = +2;
-    if (this.state.userVote === 1 && voteDirection === +1) APIVote = -1;
-    if (this.state.userVote === -1 && voteDirection === -1) APIVote = +1;
+    if (this.state.userVote === -1 && voteDirection === 1) APIVote = 2;
+    if (this.state.userVote === 1 && voteDirection === 1) APIVote = -1;
+    if (this.state.userVote === -1 && voteDirection === -1) APIVote = 1;
     api.updateVoteById(article_id, APIVote);
   };
 
@@ -38,9 +34,9 @@ class ArticleVoteUpdator extends Component {
     const { userVote } = this.state;
     return (
       <div>
-        <p>{votes + userVote}</p>
-        <button onClick={() => this.handleUpdate(+1)}>up vote</button>
-        <button onClick={() => this.handleUpdate(-1)}>down vote</button>
+        <p>votes: {votes + userVote}</p>
+        <button onClick={() => this.handleUpdate(+1)} className={this.state.userVote === 1 ? 'button--upvote' : 'button--novote'}>up vote</button>
+        <button onClick={() => this.handleUpdate(-1)} className={this.state.userVote === -1 ? 'button--upvote' : 'button--novote'}>down vote</button>
       </div>
     );
   }
