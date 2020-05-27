@@ -47,35 +47,6 @@ class ArticleList extends Component {
     });
   }
 
-  voteCounter = (article_id, up_or_down) => {
-    if (up_or_down === "up") {
-      this.setState((currentState) => {
-        const updatedArray = currentState.articles.map((article) => {
-          if (article_id === article.article_id) {
-            article.votes++;
-          }
-          return article;
-        });
-
-        return {
-          list: updatedArray,
-        };
-      });
-    } else {
-      this.setState((currentState) => {
-        const updatedArray = currentState.articles.map((article) => {
-          if (article_id === article.article_id) {
-            article.votes--;
-          }
-          return article;
-        });
-
-        return {
-          list: updatedArray,
-        };
-      });
-    }
-  };
 
   render() {
     if (this.state.isLoading) return <p>Loading...</p>;
@@ -94,7 +65,7 @@ class ArticleList extends Component {
           {this.state.articles.map((article) => {
             return (
               <li key={article.article_id}>
-                <ArticleCard {...article} voteCounter={this.voteCounter} />
+                <ArticleCard {...article} />
               </li>
             );
           })}

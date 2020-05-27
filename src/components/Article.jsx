@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ArticleCommentCard from "./ArticleCommentCard";
 import * as api from "../utils/utils";
+import CommentAdder from "./CommentAdder";
 
 class Article extends Component {
   state = {
@@ -19,7 +20,6 @@ getArticle = () => {
         this.setState({article})
     })
     api.fetchCommentsByArticleId(article_id).then((comments) => {
-        console.log(comments)
         this.setState({ArticleComments: comments})
     })
 }
@@ -55,6 +55,7 @@ getArticle = () => {
           <button>Vote Up</button>
           <button>Vote Down</button>
         </div>
+        <CommentAdder article_id={article_id}/>
         <div>
             <ul>
                 {this.state.ArticleComments.map((comment)=> {
