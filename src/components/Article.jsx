@@ -17,9 +17,18 @@ addComments = ({comment}) => {
   })
 }
 
-deleteComments = (article_id) => {
-  console.log(article_id)
-  api.deleteCommentById(article_id)
+deleteComments = (comment_id) => {
+
+  console.log(comment_id)
+  api.deleteCommentById(comment_id).then(() => this.setState((currentState) => {
+    console.log(currentState)
+    const itemToDelete = currentState.articleComments.findIndex(comment => comment.comment_id === comment_id)
+    currentState.articleComments.splice(itemToDelete, 1)
+    return {
+      articleComments: currentState.articleComments
+    }
+  })
+  )
 }
 
 componentDidMount()    {
