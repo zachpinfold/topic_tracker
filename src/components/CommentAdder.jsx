@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import * as api from "../utils/utils";
 
 class CommentAdder extends Component {
 
@@ -20,10 +21,10 @@ class CommentAdder extends Component {
             username: username,
             body: this.state.comment
         }
-        axios.post(`https://pinny-news.herokuapp.com/api/articles/${article_id}/comments`, comment).then(({data}) => {
+        api.addCommentById(article_id, comment).then(({data}) => {
             this.props.addComments(data)
         })
-        this.setState({body: ''})
+        this.setState({comment: ''})
     }
 
     render() {

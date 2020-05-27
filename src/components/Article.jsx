@@ -10,19 +10,20 @@ class Article extends Component {
   }
 
 addComments = ({comment}) => {
-  console.log(comment)
   this.setState((currentState) => {
     return {
       articleComments: [comment, ...currentState.articleComments]
     }
   })
-  // use currentState
-  // spead and comma to push the comment in
+}
+
+deleteComments = (article_id) => {
+  console.log(article_id)
+  api.deleteCommentById(article_id)
 }
 
 componentDidMount()    {
     this.getArticle()
-    // this.getComments()
 }
 
 getArticle = () => {
@@ -64,7 +65,7 @@ getArticle = () => {
                 {this.state.articleComments.map((comment)=> {
                     return (
                     <li key={comment.comment_id}>
-                        <ArticleCommentCard username={this.props.username} {...comment}/>
+                        <ArticleCommentCard username={this.props.username} {...comment} deleteComments={this.deleteComments}/>
                     </li>
                     )
                 })}

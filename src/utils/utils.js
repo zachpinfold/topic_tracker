@@ -41,4 +41,10 @@ export const updateVoteById = (article_id, increment) => {
   );
 };
 
+export const addCommentById = (article_id, comment) => {
+  return axios.post(`https://pinny-news.herokuapp.com/api/articles/${article_id}/comments`, comment)
+}
 
+export const deleteCommentById = (comment_id) => {
+  return axios.delete(`https://pinny-news.herokuapp.com/api/comments/${comment_id}`)
+}
