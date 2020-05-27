@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import * as api from "../utils/utils";
 
 class CommentAdder extends Component {

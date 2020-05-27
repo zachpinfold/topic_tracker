@@ -34,7 +34,13 @@ export const fetchCommentsByArticleId = (article_id) => {
     });
 };
 
-export const updateVoteById = (article_id, increment) => {
+export const updateVoteById = (article_id, increment, comment) => {
+  if (comment)  {
+    return axios.patch(
+      `https://pinny-news.herokuapp.com/api/comments/${article_id}`,
+      { inc_votes: increment }
+    );
+  } else 
   return axios.patch(
     `https://pinny-news.herokuapp.com/api/articles/${article_id}`,
     { inc_votes: increment }

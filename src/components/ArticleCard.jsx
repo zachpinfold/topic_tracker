@@ -10,7 +10,7 @@ const ArticleCard = ({article_id, title, created_at, author, topic, comment_coun
             <p>{author}</p>
             <p>topic: {topic}</p>
             <p>comment count: {comment_count}</p>
-            <ArticleVoteUpdator votes={votes} article_id={article_id}/>
+            <ArticleVoteUpdator votes={votes} id={article_id}/>
         </div>
     );
 };

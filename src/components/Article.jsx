@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ArticleCommentCard from "./ArticleCommentCard";
 import * as api from "../utils/utils";
 import CommentAdder from "./CommentAdder";
+import ArticleVoteUpdator from "./ArticleVoteUpdator";
 
 class Article extends Component {
   state = {
@@ -64,9 +65,7 @@ getArticle = () => {
           <p>{body}</p>
           <p>{created_at}</p>
           <p>{author}</p>
-          <p>votes: {votes}</p>
-          <button>Vote Up</button>
-          <button>Vote Down</button>
+          <ArticleVoteUpdator votes={votes} id={article_id}/>
         </div>
         <CommentAdder username={this.props.username} article_id={article_id} addComments={this.addComments}/>
         <div>

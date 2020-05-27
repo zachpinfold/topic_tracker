@@ -9,16 +9,18 @@ class ArticleVoteUpdator extends Component {
   handleUpdate = (voteDirection) => {
     this.setState(({ userVote }) => {
       let vote = 0;
+      // eslint-disable-next-line       
       if (userVote === 0 && voteDirection === 1 || userVote === -1 && voteDirection === -1) vote = 1;
+      // eslint-disable-next-line   
       if (userVote === 0 && voteDirection === -1 || userVote === 1 && voteDirection === +1) vote = -1;
       if (userVote === 1 && voteDirection === -1) vote = -2;
       if (userVote === -1 && voteDirection === 1) vote = 2;
       return {
         userVote: userVote + vote,
-        // userVote: userVote === 0 ? userVote + vote : userVote - vote
       };
     });
-    const { article_id } = this.props;
+    const { id } = this.props;
+    const {comment} = this.props
     let APIVote = 0;
     if (this.state.userVote === 0 && voteDirection === 1) APIVote = 1;
     if (this.state.userVote === 0 && voteDirection === -1) APIVote = -1;
@@ -26,7 +28,9 @@ class ArticleVoteUpdator extends Component {
     if (this.state.userVote === -1 && voteDirection === 1) APIVote = 2;
     if (this.state.userVote === 1 && voteDirection === 1) APIVote = -1;
     if (this.state.userVote === -1 && voteDirection === -1) APIVote = 1;
-    api.updateVoteById(article_id, APIVote);
+    if (comment) {
+      api.updateVoteById(id, APIVote, comment)
+    } else api.updateVoteById(id, APIVote);
   };
 
   render() {
@@ -44,8 +48,3 @@ class ArticleVoteUpdator extends Component {
 
 export default ArticleVoteUpdator;
 
-{
-  /* <p>votes: {votes}</p>
-<button onClick={() => voteCounter(article_id, 'up')}>Vote Up</button>
-<button onClick={() => voteCounter(article_id, 'down')}>Vote Down</button> */
-}
