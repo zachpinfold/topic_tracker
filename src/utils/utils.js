@@ -27,10 +27,14 @@ export const fetchArticleById = (article_id) => {
     });
 };
 
-export const fetchCommentsByArticleId = (article_id) => {
+export const fetchCommentsByArticleId = (article_id, order, sort_by ) => {
+  // console.log(sort_by, order)
   return axios
-    .get(`https://pinny-news.herokuapp.com/api/articles/${article_id}/comments`)
+    .get(`https://pinny-news.herokuapp.com/api/articles/${article_id}/comments`, {
+      params: {order: order, sort_by: sort_by}
+    })
     .then(({ data: { comments } }) => {
+      console.log(comments)
       return comments;
     });
 };

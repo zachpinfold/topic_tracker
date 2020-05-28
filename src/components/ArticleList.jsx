@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ArticleCard from "./ArticleCard";
 import * as api from "../utils/utils";
 import Pagination from "./Pagination";
+import ErrorDisplay from "./ErrorDisplay";
 
 class ArticleList extends Component {
   state = {
@@ -10,7 +11,8 @@ class ArticleList extends Component {
     order: "desc",
     sort_by: "created_at",
     page_number: 1,
-    article_limit: null
+    article_limit: null,
+    err: ''
   };
 
   componentDidMount() {
@@ -35,6 +37,13 @@ class ArticleList extends Component {
     })
   }
 
+  makeArticleLimit = (total_count) => {
+    const article_limit = Math.ceil(((total_count / 10) * 10)/10)
+    this.setState({
+       article_limit: article_limit
+     })
+   }
+
   getArticles = () => {
     api
       .fetchArticles(
@@ -49,16 +58,13 @@ class ArticleList extends Component {
         this.setState({
           articles,
           isLoading: false,
-        });
-      });
+        })
+      }).catch((err) => {
+        console.log(err.response)
+        this.setState({err: err.response.data.msg, isLoading: false})
+      })
   };
 
-  makeArticleLimit = (total_count) => {
-   const article_limit = Math.ceil(((total_count / 10) * 10)/10)
-   this.setState({
-      article_limit: article_limit
-    })
-  }
 
   toggleSortBy(sort_by) {
     this.setState((currentState) => {
@@ -72,6 +78,7 @@ class ArticleList extends Component {
 
   render() {
     if (this.state.isLoading) return <p>Loading...</p>;
+    if (this.state.err) return <ErrorDisplay msg={this.state.err}/>
     return (
       <div>
         <button onClick={() => this.toggleSortBy("created_at")}>

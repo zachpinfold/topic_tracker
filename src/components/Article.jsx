@@ -3,52 +3,83 @@ import ArticleCommentCard from "./ArticleCommentCard";
 import * as api from "../utils/utils";
 import CommentAdder from "./CommentAdder";
 import ArticleVoteUpdator from "./ArticleVoteUpdator";
+import ErrorDisplay from "./ErrorDisplay";
 
 class Article extends Component {
   state = {
     article: {},
-    articleComments: []
+    isLoading: true,
+    articleComments: [],
+    err: "",
+    order: "desc",
+    sort_by: "created_at",
+  };
+
+  addComments = ({ comment }) => {
+    this.setState((currentState) => {
+      return {
+        articleComments: [comment, ...currentState.articleComments],
+      };
+    });
+  };
+
+  deleteComments = (comment_id) => {
+    console.log(comment_id);
+    api.deleteCommentById(comment_id).then(() =>
+      this.setState((currentState) => {
+        console.log(currentState);
+        const itemToDelete = currentState.articleComments.findIndex(
+          (comment) => comment.comment_id === comment_id
+        );
+        currentState.articleComments.splice(itemToDelete, 1);
+        return {
+          articleComments: currentState.articleComments,
+        };
+      })
+    );
+  };
+
+  componentDidMount() {
+    this.getArticle();
   }
 
-addComments = ({comment}) => {
-  this.setState((currentState) => {
-    return {
-      articleComments: [comment, ...currentState.articleComments]
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.order !== this.state.order) {
+      this.getArticle();
     }
-  })
-}
+  }
 
-deleteComments = (comment_id) => {
-
-  console.log(comment_id)
-  api.deleteCommentById(comment_id).then(() => this.setState((currentState) => {
-    console.log(currentState)
-    const itemToDelete = currentState.articleComments.findIndex(comment => comment.comment_id === comment_id)
-    currentState.articleComments.splice(itemToDelete, 1)
-    return {
-      articleComments: currentState.articleComments
-    }
-  })
-  )
-}
-
-componentDidMount()    {
-    this.getArticle()
-}
-
-getArticle = () => {
-    const {article_id} = this.props
+  getArticle = () => {
+    const { article_id } = this.props;
+    const { order, sort_by } = this.state;
+    console.log(order);
     api.fetchArticleById(article_id).then((article) => {
-        this.setState({article})
-    })
-    api.fetchCommentsByArticleId(article_id).then((comments) => {
-        this.setState({articleComments: comments})
-    })
-}
+      this.setState({ article });
+    });
+    api
+      .fetchCommentsByArticleId(article_id, order, sort_by)
+      .then((comments) => {
+        this.setState({ articleComments: comments, isLoading: false });
+      })
+      .catch((err) => {
+        this.setState({ err: err.response.data.msg, isLoading: false });
+      });
+  };
+
+  toggleSortBy(sort_by) {
+    this.setState((currentState) => {
+      return {
+        order: currentState.order === "desc" ? "asc" : "desc",
+        sort_by: sort_by,
+      };
+    });
+  }
 
   render() {
+    if (this.state.isLoading) return <p>Loading...</p>;
+    if (this.state.err) return <ErrorDisplay msg={this.state.err} />;
     const {
-        article_id,
+      article_id,
       topic,
       title,
       body,
@@ -59,25 +90,39 @@ getArticle = () => {
     return (
       <div>
         <div>
-            <p> article_id: {article_id}</p>
+          <p> article_id: {article_id}</p>
           <p>{topic}</p>
           <p>{title}</p>
           <p>{body}</p>
           <p>{created_at}</p>
           <p>{author}</p>
-          <ArticleVoteUpdator votes={votes} id={article_id}/>
+          <ArticleVoteUpdator votes={votes} id={article_id} />
         </div>
-        <CommentAdder username={this.props.username} article_id={article_id} addComments={this.addComments}/>
+        <CommentAdder
+          username={this.props.username}
+          article_id={article_id}
+          addComments={this.addComments}
+        />
+        <button onClick={() => this.toggleSortBy("created_at")}>
+          sort by date
+        </button>
+        <button onClick={() => this.toggleSortBy("votes")}>
+          sort by votes
+        </button>
         <div>
-            <ul>
-                {this.state.articleComments.map((comment)=> {
-                    return (
-                    <li key={comment.comment_id}>
-                        <ArticleCommentCard username={this.props.username} {...comment} deleteComments={this.deleteComments}/>
-                    </li>
-                    )
-                })}
-            </ul>
+          <ul>
+            {this.state.articleComments.map((comment) => {
+              return (
+                <li key={comment.comment_id}>
+                  <ArticleCommentCard
+                    username={this.props.username}
+                    {...comment}
+                    deleteComments={this.deleteComments}
+                  />
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     );
