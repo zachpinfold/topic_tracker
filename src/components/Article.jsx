@@ -24,7 +24,6 @@ class Article extends Component {
   };
 
   deleteComments = (comment_id) => {
-    console.log(comment_id);
     api.deleteCommentById(comment_id).then(() =>
       this.setState((currentState) => {
         console.log(currentState);
@@ -52,10 +51,11 @@ class Article extends Component {
   getArticle = () => {
     const { article_id } = this.props;
     const { order, sort_by } = this.state;
-    console.log(order);
     api.fetchArticleById(article_id).then((article) => {
       this.setState({ article });
-    });
+    }).catch((err) => {
+      this.setState({ err: err.response.data.msg, isLoading: false });
+    })
     api
       .fetchCommentsByArticleId(article_id, order, sort_by)
       .then((comments) => {

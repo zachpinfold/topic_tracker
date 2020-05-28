@@ -1,13 +1,13 @@
 import React from "react";
 
 
-const Pagination = (props) => {
+const Pagination = ({handlePageUpdate, page_number, article_limit}) => {
 
     return (
       <div>
-        <button disabled={props.page_number < 2} onClick={() => {props.handlePageUpdate(-1)}}>previous</button>
-        <p>page number: {props.page_number}</p>
-        <button disabled={props.page_number === props.article_limit} onClick={() => {props.handlePageUpdate(+1)}}>next</button>
+        <button disabled={page_number < 2} onClick={() => {handlePageUpdate(-1)}}>previous</button>
+        <p>page number: {page_number}</p>
+        <button disabled={page_number === article_limit} onClick={() => {handlePageUpdate(+1)}}>next</button>
       </div>
     );
 }

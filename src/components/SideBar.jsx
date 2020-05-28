@@ -28,14 +28,11 @@ class SideBar extends Component {
             Discover and debate topics from all over the internet. Text only (no
             images) - the devil is in the detail.
           </h3>
-          <Link id={'all--articles--button'} to={"/articles/"}>
-            <p>all articles</p>
-          </Link>
           <h2>VIEW ARTICLES BY TOPIC -></h2>
-          <ul style={{marginBlockStart: '0', marginBlockEnd: '0', paddingInlineStart: '0'}}>
+          <ul className={"topic---button---wrapper"} style={{marginBlockStart: '0', marginBlockEnd: '0', paddingInlineStart: '0'}}>
             {this.state.topics.map(({ slug, color }) => {
               return (
-                <li id={"topic---button---wrapper"} key={slug}>
+                <li key={slug}>
                   <Link className={"links"} to={`/articles/topic/${slug}`}>
                     <p
                       style={{ backgroundColor: color, color: "white" }}
@@ -49,6 +46,11 @@ class SideBar extends Component {
               );
             })}
           </ul>
+          <Link id={'all--articles--button'} to={"/articles/"}>
+            <p>all articles</p>
+          </Link>
+          {/* <FontAwesomeIcon icon="coffee" /> */}
+
 
         </div>
 

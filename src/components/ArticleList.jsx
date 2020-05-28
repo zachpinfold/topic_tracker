@@ -45,6 +45,7 @@ class ArticleList extends Component {
    }
 
   getArticles = () => {
+    console.log(this.props.colourLookUpObject)
     api
       .fetchArticles(
         this.props.topic_slug,
@@ -77,6 +78,7 @@ class ArticleList extends Component {
 
 
   render() {
+    const {colourLookUpObject} = this.props
     if (this.state.isLoading) return <p>Loading...</p>;
     if (this.state.err) return <ErrorDisplay msg={this.state.err}/>
     return (
@@ -94,7 +96,7 @@ class ArticleList extends Component {
           {this.state.articles.map((article) => {
             return (
               <li key={article.article_id}>
-                <ArticleCard {...article} />
+                <ArticleCard {...article} colourLookUpObject={colourLookUpObject} />
               </li>
             );
           })}

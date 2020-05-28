@@ -1,9 +1,10 @@
 import React from 'react';
 
 const ErrorDisplay = ({msg}) => {
+    const err = msg || 'Page not found...'
     return (
         <div>
-            <h1>{msg}</h1>
+            <h1>{err}</h1>
         </div>
     );
 };

@@ -1,9 +1,17 @@
 import axios from "axios";
 
-export const fetchTopics = () => {
+export const fetchTopics = (lookUp) => {
   return axios
     .get("https://pinny-news.herokuapp.com/api/topics")
     .then(({ data: { topics } }) => {
+      if (lookUp) {
+        const lookupObj = {};
+        topics.forEach((row) => {
+          lookupObj[row.slug] = row.color;
+        });
+        console.log(lookupObj)
+        return lookupObj
+      } else
       return topics;
     });
 };
@@ -28,13 +36,11 @@ export const fetchArticleById = (article_id) => {
 };
 
 export const fetchCommentsByArticleId = (article_id, order, sort_by ) => {
-  // console.log(sort_by, order)
   return axios
     .get(`https://pinny-news.herokuapp.com/api/articles/${article_id}/comments`, {
       params: {order: order, sort_by: sort_by}
     })
     .then(({ data: { comments } }) => {
-      console.log(comments)
       return comments;
     });
 };
