@@ -9,7 +9,8 @@ import Article from "./components/Article";
 class App extends Component {
   state = {
     username: "happyamy2016",
-  };
+    // lookup-object to get the colors/topics //
+  }; 
 
   render() {
     return (

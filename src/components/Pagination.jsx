@@ -1,31 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 
 
-class Pagination extends Component {
-  state = {
-    pageNumber: 1,
-  };
+const Pagination = (props) => {
 
-  handleUpdate = (pageDirection) => {
-    this.setState(({pageNumber}) => {
-        return  {
-            pageNumber: pageNumber + pageDirection
-        }
-    })
-    const {pageNumber} = this.state
-    this.props.getArticles(pageNumber)
-  }
-
-  render() {
-    const { pageNumber } = this.state;
     return (
       <div>
-        <button onClick={() => {this.handleUpdate(-1)}}>previous</button>
-        <p>page number: {pageNumber}</p>
-        <button onClick={() => {this.handleUpdate(+1)}}>next</button>
+        <button disabled={props.page_number < 2} onClick={() => {props.handlePageUpdate(-1)}}>previous</button>
+        <p>page number: {props.page_number}</p>
+        <button disabled={props.page_number === props.article_limit} onClick={() => {props.handlePageUpdate(+1)}}>next</button>
       </div>
     );
-  }
 }
 
 export default Pagination;

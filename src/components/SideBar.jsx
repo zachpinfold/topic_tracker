@@ -22,24 +22,29 @@ class SideBar extends Component {
     if (this.state.isLoading) return <p>Loading...</p>;
     return (
       <div>
-        <div>
-          <h1>(text) TOPIC TRACKER</h1>
+        <div id={'navbar'}>
+          <h1>TOPIC TRACKER</h1>
           <h3>
             Discover and debate topics from all over the internet. Text only (no
             images) - the devil is in the detail.
           </h3>
           <h2>VIEW ARTICLES -></h2>
-          <ul>
-            {this.state.topics.map(({ slug }) => {
+          <ul >
+            {this.state.topics.map(({ slug, color }) => {
               return (
-                <li key={slug}>
+                <li id={'topic---button---wrapper'} key={slug}>
                   {" "}
-                  <Link to={`/articles/topic/${slug}`}>{slug}</Link>
+                  <Link className={'links'} to={`/articles/topic/${slug}`}>
+                    <p style={
+                  {'backgroundColor': color}  
+                  }  
+                  className={'navbuttons---topics'}>{slug}</p>
+                  </Link>
                 </li>
               );
             })}
           </ul>
-          <Link to={'/articles/'}>all articles</Link>
+          <Link id={'all--link'}  to={'/articles/'}>all articles</Link>
         </div>
       </div>
     );

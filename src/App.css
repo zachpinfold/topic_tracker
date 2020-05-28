@@ -3,6 +3,28 @@
   padding: 0;
 } */
 
+h1 {
+  font-family: 'Helvetica Neue LT W05_97 Blk C';
+  font-size: 40pt;
+}
+
+h2 {
+  font-family: 'Helvetica Neue LT W05_97 Blk C';
+  font-size: 20pt;
+  margin-bottom: 15px;
+}
+
+h3 {
+  font-family: 'Helvetica Neue LT W05_45 Light';
+  font-size: 15pt;
+  margin-bottom: 15px;
+}
+
+.links  {
+  text-decoration: none;
+  background-color: green;
+}
+
 li {
   list-style: none;
 }
@@ -11,31 +33,56 @@ h1{
   margin-bottom: 20px;
 }
 
-/* body {
-  overflow-y: hidden;
-} */
-
 #hero--div  {
-  display: flex;
-  flex-flow:row nowrap;
-  height:100vh;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: auto;
 }
 
 #hero--container--1 {
+  position: fixed;
   display: flex;
-  flex: 1;
   flex-flow: column nowrap;
   justify-content: center;
-  padding-left: 50px;
+  width: 50%;
+  height: 100%;
+}
+
+#all--link  {
+  flex-flow: column;
 }
 
 #hero--container--2 {
-  flex: 1;
-  overflow-y: auto;
+float: right;
+left: 30%;
+width: 50%;
+height: 100%;
 }
 
 .button--upvote {
   opacity: 50%;
+}
+
+#navbar {
+  padding: 0px 150px 0px 50px;
+}
+
+#topic---button---wrapper {
+  text-decoration: underline;
+  float: left;
+}
+
+.navbuttons---topics {
+  display: block;
+  text-decoration: none;
+  /* background-color: #177e89; */
+  width: 75px;
+  text-align: center;
+  padding: 5px 10px 5px 10px;
+  margin: 10px;
+  margin-bottom: 20px;
+  color: black
 }
 
 /* .App {
