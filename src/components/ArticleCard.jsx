@@ -10,19 +10,33 @@ const ArticleCard = ({
   topic,
   comment_count,
   votes,
-  colourLookUpObject
+  colourLookUpObject,
 }) => {
-
   return (
-    <div>
-      <Link to={`/articles/article/${article_id}`}>
-        <h3>{title}</h3>
+    <div className={'article-card'}>
+      <Link
+        className={"article-card-title"}
+        to={`/articles/article/${article_id}`}
+      >
+        <h2 className={"article-card-title"}>{title}</h2>
       </Link>
-      <p>{created_at}</p>
-      <p>{author}</p>
-      <p style={{ backgroundColor: colourLookUpObject[topic]}}>topic: {topic}</p>
-      <p>comment count: {comment_count}</p>
-      <ArticleVoteUpdator votes={votes} id={article_id} />
+      <div className={"article-card-div"}>
+        <div className={"article-card-div-left"}>
+          <p className={"article-card-date"}>{created_at}</p>
+          <p className={"article-card-username"}>{author}</p>
+          <ArticleVoteUpdator topic={topic} colourLookUpObject={colourLookUpObject} votes={votes} id={article_id} />
+
+          <p className={'article-card-comment'}>comment count: {comment_count}</p>
+
+        </div>
+        <div className={"article-card-div-right"}>
+          <p className={'article-card-topic'} style={{ backgroundColor: colourLookUpObject[topic] }}>
+            {topic}
+          </p>
+
+        </div>
+
+      </div>
     </div>
   );
 };

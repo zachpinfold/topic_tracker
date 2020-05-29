@@ -84,11 +84,10 @@ class ArticleList extends Component {
   render() {
     const {colourLookUpObject} = this.props
     const {sort_by, order} = this.state
-    console.log(sort_by)
     if (this.state.isLoading) return <p>Loading...</p>;
     if (this.state.err) return <ErrorDisplay msg={this.state.err}/>
     return (
-      <div>
+      <div className={'right-column'}>
         <div className={'sort-button-div'}>
 
         <button className={sort_by === 'created_at' ? "sort-button-selected" : 'sort-button-deselected'} onClick={() => this.toggleSortBy("created_at")}>

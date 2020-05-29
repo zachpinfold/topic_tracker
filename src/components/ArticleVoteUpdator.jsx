@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import * as api from "../utils/utils";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
 class ArticleVoteUpdator extends Component {
   state = {
@@ -37,10 +39,14 @@ class ArticleVoteUpdator extends Component {
     const { votes } = this.props;
     const { userVote } = this.state;
     return (
-      <div>
-        <p>votes: {votes + userVote}</p>
-        <button onClick={() => this.handleUpdate(+1)} className={this.state.userVote === 1 ? 'button--upvote' : 'button--novote'}>up vote</button>
-        <button onClick={() => this.handleUpdate(-1)} className={this.state.userVote === -1 ? 'button--upvote' : 'button--novote'}>down vote</button>
+      <div className={'vote-div'}>
+        <button onClick={() => this.handleUpdate(+1)} className={this.state.userVote === 1 ? 'button--upvote' : 'button--downvote'} >
+        <FontAwesomeIcon className={'vote-icon'} icon={faAngleUp}/>
+          </button>
+        <button onClick={() => this.handleUpdate(-1)} className={this.state.userVote === -1 ? 'button--upvote' : 'button--downvote'}>
+        <FontAwesomeIcon className={'vote-icon'} icon={faAngleDown}/>
+        </button>
+        <p className={this.state.userVote === 1 || this.state.userVote === -1 ? 'button--upvote--number' : 'button--downvote--number'}>{votes + userVote}</p>
       </div>
     );
   }

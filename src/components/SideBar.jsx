@@ -24,7 +24,7 @@ class SideBar extends Component {
     return (
       <div>
         <div id={"navbar"}>
-          <h1>TOPIC TRACKER</h1>
+          <h1 className="hero-title">TOPIC TRACKER</h1>
           <h3>
             Discover and debate topics from all over the internet. Text only (no
             images) - the devil is in the detail.
