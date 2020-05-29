@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "@reach/router";
 import * as api from "../utils/utils";
 
+
 class SideBar extends Component {
   state = {
     topics: [],
@@ -49,7 +50,6 @@ class SideBar extends Component {
           <Link id={'all--articles--button'} to={"/articles/"}>
             <p>all articles</p>
           </Link>
-          {/* <FontAwesomeIcon icon="coffee" /> */}
 
 
         </div>

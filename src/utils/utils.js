@@ -9,7 +9,6 @@ export const fetchTopics = (lookUp) => {
         topics.forEach((row) => {
           lookupObj[row.slug] = row.color;
         });
-        console.log(lookupObj)
         return lookupObj
       } else
       return topics;
