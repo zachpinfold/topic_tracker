@@ -1,68 +1,54 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TOPIC TRACKER
 
-## Available Scripts
+## README - Welcome to my Topic Tracker, a functioning topic tracking app built with front and back-end frameworks. 
 
-In the project directory, you can run:
+Please follow this link to find a deployed version of the Topic Tracker: 
 
-### `npm start`
+// placeholder //
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Application info 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- The back-end of this application was built with node, express, and knex; utilising Postgres database. 
 
-### `npm test`
+- The front-end of this application was built in react. 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Functionality - currenlty you can do the following in the Topic Tracker. 
 
-### `npm run build`
+- Navigate between topics using the right hand navbar.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- vote up or down for your favourite topics.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- Select and view topics, including their corresponding comments. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Vote on said comments.
 
-### `npm run eject`
+- Create your own comment. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Delete your own comment. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Front-end 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Please follow this link to reach my front-end repo for this application: 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+(https://github.com/ZachPinfold/topic_tracker)
 
-## Learn More
+## Back-end 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Please follow this link to reach my back-end repo for this application: 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+(https://github.com/ZachPinfold/nc-news)
 
-### Code Splitting
+## Node version requirements
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+This application was built in node: 6.13.7
 
-### Analyzing the Bundle Size
+## Cloning - To run this application locally: 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- Follow the link above, cope the clone/link from the repo. 
 
-### Making a Progressive Web App
+- cd into a new folder, and git clone <repo-url>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- cd into said repo, and <code .> from your terminal to run in VScode. 
 
-### Advanced Configuration
+Happy viewing! 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
