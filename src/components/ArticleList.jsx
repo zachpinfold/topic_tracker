@@ -29,6 +29,7 @@ class ArticleList extends Component {
     ) {
       this.getArticles();
     }
+    // seperate if() for if topic changes and page number needs to go back to one
   }
 
   handlePageUpdate = (pageDirection) => {
@@ -77,8 +78,9 @@ class ArticleList extends Component {
     });
   }
 
-
-  
+    //getTheme () {
+    
+    // }
 
 
   render() {
@@ -86,6 +88,7 @@ class ArticleList extends Component {
     const {sort_by, order} = this.state
     if (this.state.isLoading) return <p>Loading...</p>;
     if (this.state.err) return <ErrorDisplay msg={this.state.err}/>
+
     return (
       <div className={'right-column'}>
         <div className={'sort-button-div'}>

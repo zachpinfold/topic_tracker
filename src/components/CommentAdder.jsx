@@ -29,7 +29,7 @@ class CommentAdder extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleCommentSubmit}>
+                <form className={'comment-form'} onSubmit={this.handleCommentSubmit}>
                     <input required type="text" onChange={this.handleInputChange} placeholder="Add a comment..." value={this.state.comment}/>
                     <button>add comment</button>
                 </form>

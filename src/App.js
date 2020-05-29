@@ -36,7 +36,7 @@ getTopicColours = () => {
               <ArticleList colourLookUpObject={this.state.colourLookUpObject} path='/'/>
               <ArticleList colourLookUpObject={this.state.colourLookUpObject} path='/articles'/>
               <ArticleList colourLookUpObject={this.state.colourLookUpObject} path='/articles/topic/:topic_slug'/>
-              <Article username={this.state.username} path='/articles/article/:article_id'/>
+              <Article username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles/article/:article_id'/>
               <ErrorDisplay default/>
             </Router>
           </div>

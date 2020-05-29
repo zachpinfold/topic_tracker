@@ -24,18 +24,16 @@ class Article extends Component {
   };
 
   deleteComments = (comment_id) => {
-    api.deleteCommentById(comment_id).then(() =>
-      this.setState((currentState) => {
-        console.log(currentState);
-        const itemToDelete = currentState.articleComments.findIndex(
-          (comment) => comment.comment_id === comment_id
-        );
-        currentState.articleComments.splice(itemToDelete, 1);
-        return {
-          articleComments: currentState.articleComments,
-        };
-      })
-    );
+    api.deleteCommentById(comment_id);
+    this.setState((currentState) => {
+      const itemToDelete = currentState.articleComments.findIndex(
+        (comment) => comment.comment_id === comment_id
+      );
+      currentState.articleComments.splice(itemToDelete, 1);
+      return {
+        articleComments: currentState.articleComments,
+      };
+    });
   };
 
   componentDidMount() {
@@ -51,11 +49,14 @@ class Article extends Component {
   getArticle = () => {
     const { article_id } = this.props;
     const { order, sort_by } = this.state;
-    api.fetchArticleById(article_id).then((article) => {
-      this.setState({ article });
-    }).catch((err) => {
-      this.setState({ err: err.response.data.msg, isLoading: false });
-    })
+    api
+      .fetchArticleById(article_id)
+      .then((article) => {
+        this.setState({ article });
+      })
+      .catch((err) => {
+        this.setState({ err: err.response.data.msg, isLoading: false });
+      });
     api
       .fetchCommentsByArticleId(article_id, order, sort_by)
       .then((comments) => {
@@ -78,6 +79,7 @@ class Article extends Component {
   render() {
     if (this.state.isLoading) return <p>Loading...</p>;
     if (this.state.err) return <ErrorDisplay msg={this.state.err} />;
+    const { colourLookUpObject } = this.props;
     const {
       article_id,
       topic,
@@ -87,15 +89,22 @@ class Article extends Component {
       author,
       votes,
     } = this.state.article;
+    console.log(colourLookUpObject);
     return (
-      <div>
+      <div className={"article-div"}>
         <div>
-          <p> article_id: {article_id}</p>
-          <p>{topic}</p>
-          <p>{title}</p>
-          <p>{body}</p>
-          <p>{created_at}</p>
-          <p>{author}</p>
+          <div className={"article-topic-div"}>
+            <p
+              className={"article-topic"}
+              style={{ backgroundColor: colourLookUpObject[topic] }}
+            >
+              {topic}
+            </p>
+          </div>
+          <p className={'article-title'}>{title}</p>
+          <p className={'article-date'}>{created_at}</p>
+          <p className={'article-body'}>{body}</p>
+          <p className={'article-card-username'}>{author}</p>
           <ArticleVoteUpdator votes={votes} id={article_id} />
         </div>
         <CommentAdder

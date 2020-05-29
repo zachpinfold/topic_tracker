@@ -30,7 +30,7 @@ const ArticleCard = ({
 
         </div>
         <div className={"article-card-div-right"}>
-          <p className={'article-card-topic'} style={{ backgroundColor: colourLookUpObject[topic] }}>
+          <p className={'article-card-topic'} style={{ backgroundColor: colourLookUpObject[topic],  }}>
             {topic}
           </p>
 
