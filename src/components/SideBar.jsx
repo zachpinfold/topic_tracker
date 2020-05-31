@@ -7,6 +7,7 @@ class SideBar extends Component {
   state = {
     topics: [],
     isLoading: true,
+    activeButton: 'all_articles'
   };
 
   componentDidMount() {
@@ -18,6 +19,10 @@ class SideBar extends Component {
       this.setState({ topics, isLoading: false });
     });
   };
+
+  makeButtonActive = (slug) =>  {
+    this.setState({activeButton: slug})
+  }
 
   render() {
     if (this.state.isLoading) return <p>Loading...</p>;
@@ -34,10 +39,10 @@ class SideBar extends Component {
             {this.state.topics.map(({ slug, color }) => {
               return (
                 <li key={slug}>
-                  <Link className={"links"} to={`/articles/topic/${slug}`}>
+                  <Link onClick={() => this.makeButtonActive(slug)} className={"links"} to={`/articles/topic/${slug}`}>
                     <p
                       style={{ backgroundColor: color, color: "white" }}
-                      className={"navbuttons---topics"}
+                      className={this.state.activeButton === slug ? "navbuttons---topics---selected" : 'navbuttons---topics---faded'}
                     >
                       {slug}
                     </p>
@@ -47,7 +52,7 @@ class SideBar extends Component {
               );
             })}
           </ul>
-          <Link id={'all--articles--button'} to={"/articles/"}>
+          <Link onClick={() => this.makeButtonActive('all_articles')} id={this.state.activeButton === 'all_articles' ? 'all--articles--button--selected' : 'all--articles--button--faded'} to={"/articles/"}>
             <p>all articles</p>
           </Link>
 

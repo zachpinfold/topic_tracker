@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "@reach/router";
 import ArticleVoteUpdator from "./ArticleVoteUpdator";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
+
 
 const ArticleCard = ({
   article_id,
@@ -30,7 +33,10 @@ const ArticleCard = ({
 
         </div>
         <div className={"article-card-div-right"}>
-          <p className={'article-card-topic'} style={{ backgroundColor: colourLookUpObject[topic],  }}>
+          <p className={'article-card-topic'}>
+          <FontAwesomeIcon style={
+            { marginRight: '7px', fontSize: '12px', color: colourLookUpObject[topic], borderRadius: '10px', outline: 'none', borderColor: colourLookUpObject[topic], boxShadow: `0 0 5px ${colourLookUpObject[topic]}` }} 
+icon={faCircle}/>
             {topic}
           </p>
 
@@ -42,3 +48,5 @@ const ArticleCard = ({
 };
 
 export default ArticleCard;
+
+// style={{ backgroundColor: colourLookUpObject[topic],
