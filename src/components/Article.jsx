@@ -106,7 +106,6 @@ class Article extends Component {
       author,
       votes,
     } = this.state.article;
-    console.log(this.state.createdAt)
     return (
       <div className={"article-div"}>
         <div className={"article-div-copy"}>
