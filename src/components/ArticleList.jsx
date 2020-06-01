@@ -3,8 +3,7 @@ import ArticleCard from "./ArticleCard";
 import * as api from "../utils/utils";
 import Pagination from "./Pagination";
 import ErrorDisplay from "./ErrorDisplay";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartLine, faComment, faStar } from '@fortawesome/free-solid-svg-icons'
+import SortByButtons from "./SortByButtons";
 
 class ArticleList extends Component {
   state = {
@@ -30,6 +29,9 @@ class ArticleList extends Component {
       this.getArticles();
     }
     // seperate if() for if topic changes and page number needs to go back to one
+    if (prevProps.topic_slug !== this.props.topic_slug) {
+      this.setState({page_number: 1})
+    }
   }
 
   handlePageUpdate = (pageDirection) => {
@@ -69,7 +71,8 @@ class ArticleList extends Component {
   };
 
 
-  toggleSortBy(sort_by) {
+  toggleSortBy = (sort_by) => {
+    console.log(this)
     this.setState((currentState) => {
       return {
         order: currentState.order === "desc" ? "asc" : "desc",
@@ -91,21 +94,9 @@ class ArticleList extends Component {
 
     return (
       <div className={'right-column'}>
-        <div className={'sort-button-div'}>
 
-        <button className={sort_by === 'created_at' ? "sort-button-selected" : 'sort-button-deselected'} onClick={() => this.toggleSortBy("created_at")}>
-        <FontAwesomeIcon className={sort_by === 'created_at' ? "sort-icon-show" : 'sort-icon-hide '} icon={faStar}/> <p className={order === 'asc' && sort_by === 'created_at'  ? 'icon-hide-text' : 'icon-show-text'}> New</p> <p className={order === 'asc' && sort_by === 'created_at' ? 'icon-show-text' : 'icon-hide-text'}> Old</p> 
-        </button>
+        <SortByButtons sort_by={sort_by} order={order} toggleSortBy={this.toggleSortBy} article={'article'}/>
 
-        <button className={sort_by === 'comment_count' ? "sort-button-selected" : 'sort-button-deselected'} onClick={() => this.toggleSortBy("comment_count")}>
-        <FontAwesomeIcon className={sort_by === 'comment_count' ? "sort-icon-show" : 'sort-icon-hide '} icon={faComment}/> <p className={order === 'asc' && sort_by === 'comment_count'  ? 'icon-hide-text' : 'icon-show-text'}> Most Comments</p> <p className={order === 'asc' && sort_by === 'comment_count' ? 'icon-show-text' : 'icon-hide-text'}> Least Comments</p> 
-        </button>
-
-                <button className={sort_by === 'votes' ? "sort-button-selected" : 'sort-button-deselected'} onClick={() => this.toggleSortBy("votes")}>
-        <FontAwesomeIcon className={sort_by === 'votes' ? "sort-icon-show" : 'sort-icon-hide '} icon={faChartLine}/> <p className={order === 'asc' && sort_by === 'votes'  ? 'icon-hide-text' : 'icon-show-text'}> Most Votes</p> <p className={order === 'asc' && sort_by === 'votes' ? 'icon-show-text' : 'icon-hide-text'}> Least Votes</p> 
-        </button>
-
-        </div>
         <ul>
           {this.state.articles.map((article) => {
             return (

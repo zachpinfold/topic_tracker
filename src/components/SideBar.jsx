@@ -43,6 +43,7 @@ class SideBar extends Component {
                     <p
                       style={{ backgroundColor: color, color: "white" }}
                       className={this.state.activeButton === slug ? "navbuttons---topics---selected" : 'navbuttons---topics---faded'}
+                      // className={"navbuttons---topics---selected"}
                     >
                       {slug}
                     </p>

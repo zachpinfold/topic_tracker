@@ -4,6 +4,9 @@ import * as api from "../utils/utils";
 import CommentAdder from "./CommentAdder";
 import ArticleVoteUpdator from "./ArticleVoteUpdator";
 import ErrorDisplay from "./ErrorDisplay";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import SortByButtons from "./SortByButtons";
 
 class Article extends Component {
   state = {
@@ -67,7 +70,7 @@ class Article extends Component {
       });
   };
 
-  toggleSortBy(sort_by) {
+  toggleSortBy = (sort_by) => {
     this.setState((currentState) => {
       return {
         order: currentState.order === "desc" ? "asc" : "desc",
@@ -80,6 +83,7 @@ class Article extends Component {
     if (this.state.isLoading) return <p>Loading...</p>;
     if (this.state.err) return <ErrorDisplay msg={this.state.err} />;
     const { colourLookUpObject } = this.props;
+    const {order, sort_by} = this.state
     const {
       article_id,
       topic,
@@ -89,35 +93,41 @@ class Article extends Component {
       author,
       votes,
     } = this.state.article;
-    console.log(colourLookUpObject);
     return (
       <div className={"article-div"}>
-        <div>
-          <div className={"article-topic-div"}>
-            <p
-              className={"article-topic"}
-              style={{ backgroundColor: colourLookUpObject[topic] }}
-            >
-              {topic}
-            </p>
-          </div>
-          <p className={'article-title'}>{title}</p>
-          <p className={'article-date'}>{created_at}</p>
-          <p className={'article-body'}>{body}</p>
-          <p className={'article-card-username'}>{author}</p>
+        <div className={"article-div-copy"}>
+        <p
+            className={"article-topic"}
+          >
+            <FontAwesomeIcon
+              style={{
+                marginRight: "7px",
+                fontSize: "12px",
+                color: colourLookUpObject[topic],
+                borderRadius: "10px",
+                outline: "none",
+                borderColor: colourLookUpObject[topic],
+                boxShadow: `0 0 5px ${colourLookUpObject[topic]}`,
+              }}
+              icon={faCircle}
+            />
+            {topic}
+          </p>
+          <p className={"article-title"}>{title}</p>
+          <p className={"article-date"}>{created_at}</p>
+
+          <p className={"article-body"}>{body}</p>
+          <p className={"article-card-username"}>{author}</p>
           <ArticleVoteUpdator votes={votes} id={article_id} />
+        
         </div>
+        <h2>COMMENTS</h2>
         <CommentAdder
           username={this.props.username}
           article_id={article_id}
           addComments={this.addComments}
         />
-        <button onClick={() => this.toggleSortBy("created_at")}>
-          sort by date
-        </button>
-        <button onClick={() => this.toggleSortBy("votes")}>
-          sort by votes
-        </button>
+        <SortByButtons  toggleSortBy={this.toggleSortBy} sort_by={sort_by} order={order}/>
         <div>
           <ul>
             {this.state.articleComments.map((comment) => {
