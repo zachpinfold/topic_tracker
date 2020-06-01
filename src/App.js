@@ -6,11 +6,13 @@ import ArticleList from "./components/ArticleList";
 import Article from "./components/Article";
 import * as api from "./utils/utils";
 import ErrorDisplay from "./components/ErrorDisplay";
+import Username from "./components/Username";
 
 
 class App extends Component {
   state = {
     username: "happyamy2016",
+    avatar: 'https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
     colourLookUpObject: {},
   }; 
 
@@ -25,11 +27,13 @@ getTopicColours = () => {
 }
 
   render() {
+    const {avatar, username} = this.state
     return (
       <>
         <div id='hero--div'>
           <div id='hero--container--1'>
-            <SideBar />
+            <Username avatar={avatar} username={username}  />
+            <SideBar/>
           </div>
           <div id='hero--container--2'>
             <Router>

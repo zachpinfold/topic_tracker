@@ -46,7 +46,7 @@ class ArticleVoteUpdator extends Component {
         <button onClick={() => this.handleUpdate(-1)} className={this.state.userVote === -1 ? 'button--upvote' : 'button--downvote'}>
         <FontAwesomeIcon className={'vote-icon'} icon={faAngleDown}/>
         </button>
-        <p className={this.state.userVote === '1' || this.state.userVote === '-1' ? 'button--upvote--number' : 'button--downvote--number'}>{votes + userVote}</p>
+        <p className={this.state.userVote === 1 || this.state.userVote === -1 ? 'button--upvote--number' : 'button--downvote--number'}>{votes + userVote}</p>
       </div>
     );
   }

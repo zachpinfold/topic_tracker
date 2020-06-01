@@ -3,7 +3,7 @@ import { Link } from "@reach/router";
 import ArticleVoteUpdator from "./ArticleVoteUpdator";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
-
+import TimeAgo from "react-timeago";
 
 const ArticleCard = ({
   article_id,
@@ -25,11 +25,12 @@ const ArticleCard = ({
       </Link>
       <div className={"article-card-div"}>
         <div className={"article-card-div-left"}>
-          <p className={"article-card-date"}>{created_at}</p>
+          <TimeAgo date={new Date(created_at)} className={"article-card-date"} />
+
           <p className={"article-card-username"}>{author}</p>
           <ArticleVoteUpdator topic={topic} colourLookUpObject={colourLookUpObject} votes={votes} id={article_id} />
 
-          <p className={'article-card-comment'}>comment count: {comment_count}</p>
+          <p className={'article-card-comment'}>comments: {comment_count}</p>
 
         </div>
         <div className={"article-card-div-right"}>
@@ -48,5 +49,3 @@ icon={faCircle}/>
 };
 
 export default ArticleCard;
-
-// style={{ backgroundColor: colourLookUpObject[topic],

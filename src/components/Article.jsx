@@ -7,6 +7,7 @@ import ErrorDisplay from "./ErrorDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import SortByButtons from "./SortByButtons";
+import TimeAgo from "react-timeago";
 
 class Article extends Component {
   state = {
@@ -16,6 +17,7 @@ class Article extends Component {
     err: "",
     order: "desc",
     sort_by: "created_at",
+    createdAt: '',
   };
 
   addComments = ({ comment }) => {
@@ -52,20 +54,14 @@ class Article extends Component {
   getArticle = () => {
     const { article_id } = this.props;
     const { order, sort_by } = this.state;
-    api
-      .fetchArticleById(article_id)
-      .then((article) => {
-        this.setState({ article });
-      })
-      .catch((err) => {
-        this.setState({ err: err.response.data.msg, isLoading: false });
-      });
-    api
-      .fetchCommentsByArticleId(article_id, order, sort_by)
-      .then((comments) => {
-        this.setState({ articleComments: comments, isLoading: false });
-      })
-      .catch((err) => {
+    const queries = [api.fetchArticleById(article_id), api.fetchCommentsByArticleId(article_id, order, sort_by)]
+    Promise.all(queries)
+    .then((article) => {
+      const articleContent = article[0]
+      const articleComments = article[1]
+      this.setState({ article: articleContent, isLoading: false, articleComments: articleComments });//
+      this.dateFormatter(this.state.article.created_at); 
+    }).catch((err) => {
         this.setState({ err: err.response.data.msg, isLoading: false });
       });
   };
@@ -77,28 +73,44 @@ class Article extends Component {
         sort_by: sort_by,
       };
     });
-  }
+  };
+
+  dateFormatter = (createdAt) => {
+    const date = new Date(createdAt);
+    const dateTimeFormat = new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+    const [
+      { value: month },
+      ,
+      { value: day },
+      ,
+      { value: year },
+    ] = dateTimeFormat.formatToParts(date);
+    const result = `${day}-${month}-${year}`;
+    this.setState({ createdAt: result });
+  };
 
   render() {
     if (this.state.isLoading) return <p>Loading...</p>;
     if (this.state.err) return <ErrorDisplay msg={this.state.err} />;
     const { colourLookUpObject } = this.props;
-    const {order, sort_by} = this.state
+    const { order, sort_by } = this.state;
     const {
       article_id,
       topic,
       title,
       body,
-      created_at,
       author,
       votes,
     } = this.state.article;
+    console.log(this.state.createdAt)
     return (
       <div className={"article-div"}>
         <div className={"article-div-copy"}>
-        <p
-            className={"article-topic"}
-          >
+          <p className={"article-topic"}>
             <FontAwesomeIcon
               style={{
                 marginRight: "7px",
@@ -114,12 +126,12 @@ class Article extends Component {
             {topic}
           </p>
           <p className={"article-title"}>{title}</p>
-          <p className={"article-date"}>{created_at}</p>
+
+          {this.state.createdAt && <TimeAgo date={this.state.createdAt} className={"article-date"} />}
+          <p className={"article-username"}>{author}</p>
 
           <p className={"article-body"}>{body}</p>
-          <p className={"article-card-username"}>{author}</p>
           <ArticleVoteUpdator votes={votes} id={article_id} />
-        
         </div>
         <h2>COMMENTS</h2>
         <CommentAdder
@@ -127,7 +139,11 @@ class Article extends Component {
           article_id={article_id}
           addComments={this.addComments}
         />
-        <SortByButtons  toggleSortBy={this.toggleSortBy} sort_by={sort_by} order={order}/>
+        <SortByButtons
+          toggleSortBy={this.toggleSortBy}
+          sort_by={sort_by}
+          order={order}
+        />
         <div>
           <ul>
             {this.state.articleComments.map((comment) => {

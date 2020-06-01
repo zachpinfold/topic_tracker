@@ -22,15 +22,15 @@ class ArticleList extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.topic_slug !== this.props.topic_slug ||
       prevState.order !== this.state.order ||
       prevState.page_number !== this.state.page_number
     ) {
-      this.getArticles();
+      this.getArticles()
     }
     // seperate if() for if topic changes and page number needs to go back to one
     if (prevProps.topic_slug !== this.props.topic_slug) {
       this.setState({page_number: 1})
+      this.getArticles()
     }
   }
 

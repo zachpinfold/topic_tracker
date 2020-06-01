@@ -31,8 +31,7 @@ class SideBar extends Component {
         <div id={"navbar"}>
           <h1 className="hero-title">TOPIC TRACKER</h1>
           <h3>
-            Discover and debate topics from all over the internet. Text only (no
-            images) - the devil is in the detail.
+            Discover and debate different topics from all over the internet. 
           </h3>
           <h2>VIEW ARTICLES BY TOPIC -></h2>
           <ul className={"topic---button---wrapper"} style={{marginBlockStart: '0', marginBlockEnd: '0', paddingInlineStart: '0'}}>
