@@ -64,3 +64,7 @@ export const addCommentById = (article_id, comment) => {
 export const deleteCommentById = (comment_id) => {
   return axios.delete(`https://pinny-news.herokuapp.com/api/comments/${comment_id}`)
 }
+
+export const postArticleByTopicId = (topic_slug, article) => {
+  return axios.post(`https://pinny-news.herokuapp.com/api/topics/${topic_slug}`, article)
+}

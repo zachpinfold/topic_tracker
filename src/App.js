@@ -37,9 +37,9 @@ getTopicColours = () => {
           </div>
           <div id='hero--container--2'>
             <Router>
-              <ArticleList colourLookUpObject={this.state.colourLookUpObject} path='/'/>
-              <ArticleList colourLookUpObject={this.state.colourLookUpObject} path='/articles'/>
-              <ArticleList colourLookUpObject={this.state.colourLookUpObject} path='/articles/topic/:topic_slug'/>
+              <ArticleList username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/'/>
+              <ArticleList username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles'/>
+              <ArticleList username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles/topic/:topic_slug'/>
               <Article username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles/article/:article_id'/>
               <ErrorDisplay default/>
             </Router>

@@ -4,6 +4,7 @@ import * as api from "../utils/utils";
 import Pagination from "./Pagination";
 import ErrorDisplay from "./ErrorDisplay";
 import SortByButtons from "./SortByButtons";
+import ArticleAdder from "./ArticleAdder";
 
 class ArticleList extends Component {
   state = {
@@ -13,7 +14,7 @@ class ArticleList extends Component {
     sort_by: "created_at",
     page_number: 1,
     article_limit: null,
-    err: '',
+    err: "",
   };
 
   componentDidMount() {
@@ -25,29 +26,29 @@ class ArticleList extends Component {
       prevState.order !== this.state.order ||
       prevState.page_number !== this.state.page_number
     ) {
-      this.getArticles()
+      this.getArticles();
     }
     // seperate if() for if topic changes and page number needs to go back to one
     if (prevProps.topic_slug !== this.props.topic_slug) {
-      this.setState({page_number: 1})
-      this.getArticles()
+      this.setState({ page_number: 1 });
+      this.getArticles();
     }
   }
 
   handlePageUpdate = (pageDirection) => {
-    this.setState(({page_number}) => {
-        return  {
-          page_number: page_number + pageDirection
-        }
-    })
-  }
+    this.setState(({ page_number }) => {
+      return {
+        page_number: page_number + pageDirection,
+      };
+    });
+  };
 
   makeArticleLimit = (total_count) => {
-    const article_limit = Math.ceil(((total_count / 10) * 10)/10)
+    const article_limit = Math.ceil(((total_count / 10) * 10) / 10);
     this.setState({
-       article_limit: article_limit
-     })
-   }
+      article_limit: article_limit,
+    });
+  };
 
   getArticles = () => {
     api
@@ -58,60 +59,85 @@ class ArticleList extends Component {
         this.state.page_number
       )
       .then((articles) => {
-        const {total_count} = articles[0]
-        this.makeArticleLimit(total_count)
+        const { total_count } = articles[0];
+        this.makeArticleLimit(total_count);
         this.setState({
           articles,
           isLoading: false,
-        })
-      }).catch((err) => {
-        console.log(err.response)
-        this.setState({err: err.response.data.msg, isLoading: false})
+        });
       })
+      .catch((err) => {
+        console.log(err.response);
+        this.setState({ err: err.response.data.msg, isLoading: false });
+      });
   };
 
+  addArticle = (article) => {
+    this.setState((currentState) => {
+      console.log(article)
+      return {
+        articles: [article, ...currentState.articles],
+      };
+    });
+  };
 
   toggleSortBy = (sort_by) => {
-    console.log(this)
     this.setState((currentState) => {
       return {
         order: currentState.order === "desc" ? "asc" : "desc",
         sort_by: sort_by,
       };
     });
-  }
+  };
 
-    //getTheme () {
-    
-    // }
-
+  postArticle = ({ article }) => {
+    this.setState((currentState) => {
+      return {
+        articles: [article, ...currentState.articles],
+      };
+    });
+  };
 
   render() {
-    const {colourLookUpObject} = this.props
-    const {sort_by, order} = this.state
+    const { colourLookUpObject } = this.props;
+    const { sort_by, order } = this.state;
     if (this.state.isLoading) return <p>Loading...</p>;
-    if (this.state.err) return <ErrorDisplay msg={this.state.err}/>
+    if (this.state.err) return <ErrorDisplay msg={this.state.err} />;
 
     return (
-      <div className={'right-column'}>
-
-        <SortByButtons sort_by={sort_by} order={order} toggleSortBy={this.toggleSortBy} article={'article'}/>
+      <div className={"right-column"}>
+        <ArticleAdder
+        addArticle={this.addArticle}
+          username={this.props.username}
+          colourLookUpObject={colourLookUpObject}
+        />
+        <SortByButtons
+          sort_by={sort_by}
+          order={order}
+          toggleSortBy={this.toggleSortBy}
+          article={"article"}
+        />
 
         <ul>
           {this.state.articles.map((article) => {
             return (
               <li key={article.article_id}>
-                <ArticleCard {...article} colourLookUpObject={colourLookUpObject} />
+                <ArticleCard
+                  {...article}
+                  colourLookUpObject={colourLookUpObject}
+                />
               </li>
             );
           })}
         </ul>
-        <Pagination page_number={this.state.page_number} handlePageUpdate={this.handlePageUpdate} article_limit={this.state.article_limit}/>
+        <Pagination
+          page_number={this.state.page_number}
+          handlePageUpdate={this.handlePageUpdate}
+          article_limit={this.state.article_limit}
+        />
       </div>
     );
   }
 }
-
-
 
 export default ArticleList;
