@@ -65,6 +65,7 @@ class ArticleList extends Component {
           articles,
           isLoading: false,
         });
+        // this.props.toggleLoading()
       })
       .catch((err) => {
         console.log(err.response);
@@ -79,7 +80,7 @@ class ArticleList extends Component {
         articles: [article, ...currentState.articles],
       };
     });
-  };
+  }; 
 
   toggleSortBy = (sort_by) => {
     this.setState((currentState) => {

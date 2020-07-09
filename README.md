@@ -4,7 +4,7 @@
 
 Please follow this link to find a deployed version of the Topic Tracker: 
 
-// placeholder //
+https://topic-tracker.netlify.app/
 
 ## Application info 
 

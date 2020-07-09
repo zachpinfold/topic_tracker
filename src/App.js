@@ -14,6 +14,7 @@ class App extends Component {
     username: "happyamy2016",
     avatar: 'https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
     colourLookUpObject: {},
+    isLoading: true
   }; 
 
 componentDidMount() {
@@ -23,10 +24,16 @@ componentDidMount() {
 getTopicColours = () => {
   api.fetchTopics('lookUp').then((lookUp) => {
       this.setState({colourLookUpObject: lookUp})
+      this.toggleLoading()
     })
 }
 
+toggleLoading = () => {
+  this.setState({isLoading: false})
+}
+
   render() {
+    if (this.state.isLoading) return <div className="spinner-div"><div className="lds-ring"><div></div><div></div><div></div><div></div></div><p style={{marginTop: "10px"}}>Loading Databse</p></div> ;
     const {avatar, username} = this.state
     return (
       <>
@@ -37,9 +44,9 @@ getTopicColours = () => {
           </div>
           <div id='hero--container--2'>
             <Router>
-              <ArticleList username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/'/>
-              <ArticleList username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles'/>
-              <ArticleList username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles/topic/:topic_slug'/>
+              <ArticleList toggleLoading={this.toggleLoading} username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/'/>
+              <ArticleList toggleLoading={this.toggleLoading} username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles'/>
+              <ArticleList toggleLoading={this.toggleLoading} username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles/topic/:topic_slug'/>
               <Article username={this.state.username} colourLookUpObject={this.state.colourLookUpObject} path='/articles/article/:article_id'/>
               <ErrorDisplay default/>
             </Router>

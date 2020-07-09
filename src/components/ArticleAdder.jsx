@@ -7,9 +7,10 @@ import * as api from "../utils/utils";
 class ArticleAdder extends Component {
   state = {
     body: "",
-    topic: '-- select an option --',
-    title: "Hello",
-    optionSelect: false
+    topic: '-- select a topic --',
+    title: "",
+    optionSelect: false,
+    comment: false,
   };
 
   handleInputChange = (event) => {
@@ -26,7 +27,7 @@ class ArticleAdder extends Component {
         author: username,
         body: body,
     }
-    if (topic === '-- select an option --') {
+    if (topic === '-- select a topic --') {
         this.setState({optionSelect: true})
     }
     else{
@@ -46,20 +47,29 @@ class ArticleAdder extends Component {
 
 
   render() {
-    const { comment, topic, optionSelect } = this.state;
+    const { comment, optionSelect } = this.state;
     return (
       <div>
-        <button onClick={this.openArticleToggle}>Add Article</button>
-        {optionSelect && <p>select a topic</p>}
+        <div className={!comment ? "add-article-div" : 'add-article-div-open'}>
+              <button onClick={this.openArticleToggle} className={"add-article-button"}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+              <p className={"add-article-text"}>ADD NEW ARTICLE</p>
+            </div>
+
         {comment && (
           <form onSubmit={this.handleArticleSubmit} className={"comment-form"}>
-            <select onChange={this.handleInputChange} id="topics" name="topic">
-              <option defaultValue>-- select an option --</option>
-              <option value="coding">coding</option>
-              <option value="football">football</option>
-              <option value="cooking">cooking</option>
+            <div className={'select-topic-div'}>
+            <select className={'select-topic'} onChange={this.handleInputChange} id="topics" name="topic">
+              <option  defaultValue>-- select a topic --</option>
+              <option  value="coding">coding</option>
+              <option  value="football">football</option>
+              <option  value="cooking">cooking</option>
             </select>
+            {optionSelect && <p className={'select-warning-copy'}>select a topic</p>}
+            </div>
             <textarea
+            className={'article-title-form'}
               name="title"
               required
               type="text"
@@ -79,7 +89,7 @@ class ArticleAdder extends Component {
               <button className={"add-comment-button"}>
                 <FontAwesomeIcon icon={faPlus} />
               </button>
-              <p className={"comment-text"}>add article</p>
+              <p className={"comment-text"}>post article</p>
             </div>
           </form>
         )}
